@@ -1,0 +1,4 @@
+# Local reference material — contains personal contact info, not for the repo
+*.pdf
+
+.DS_Store
