@@ -9,15 +9,22 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8C%B1</text></svg>">
   <style>
     :root {
-      /* Black & silver + one gold accent */
-      --bg:        #0a0b0d;   /* near-black */
-      --fg:        #ccd2da;   /* silver body text — brightened for readability */
-      --fg-bright: #f4f6f9;   /* bright silver / white */
-      --emph:      #e6eaf0;   /* prose emphasis */
-      --muted:     #9aa1ab;   /* mid gray — brightened */
-      --faint:     #4d535d;   /* dividers, markers, brackets */
-      --accent:    #e6b872;   /* warm gold — the one accent */
-      --link:      #e6b872;   /* links share the accent */
+      /* Nord — Polar Night */
+      --bg:        #2e3440;
+      --bg-soft:   #3b4252;
+      --fg:        #d8dee9;
+      --fg-bright: #eceff4;
+      --muted:     #7b88a1;
+      --faint:     #4c566a;
+      /* Nord — Frost & Aurora accents */
+      --blue:   #88c0d0;
+      --teal:   #8fbcbb;
+      --green:  #a3be8c;
+      --yellow: #ebcb8b;
+      --orange: #d08770;
+      --purple: #b48ead;
+      --red:    #bf616a;
+      --link:   #88c0d0;
     }
 
     * { box-sizing: border-box; }
@@ -26,11 +33,7 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(1100px 520px at 22% -8%, #1b1e24 0%, rgba(27, 30, 36, 0) 60%),
-        var(--bg);
-      background-attachment: fixed;
+      background: var(--bg);
       color: var(--fg);
       font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco,
                    "Cascadia Code", "Roboto Mono", Consolas, "Liberation Mono", monospace;
@@ -40,7 +43,7 @@
       text-rendering: optimizeLegibility;
     }
 
-    ::selection { background: #d6dbe2; color: var(--bg); }
+    ::selection { background: var(--blue); color: var(--bg); }
 
     main {
       max-width: 46rem;
@@ -48,17 +51,13 @@
       padding: clamp(1.5rem, 3.5vw, 2rem) 1.5rem 1.75rem;
     }
 
-    /* Header — brushed-metal name */
+    /* Header */
     h1 {
       margin: 0;
       font-size: clamp(1.5rem, 5vw, 2rem);
       font-weight: 700;
       letter-spacing: 0.06em;
-      color: var(--fg-bright); /* fallback */
-      background: linear-gradient(175deg, #ffffff 0%, #d3d8de 42%, #9aa0a8 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--fg-bright);
     }
 
     .subtitle {
@@ -68,25 +67,16 @@
     .subtitle .lead { color: var(--fg-bright); }
     .subtitle .loc { color: var(--faint); }
 
-    /* Plain-text divider rules — metallic fade to the right */
+    /* Plain-text divider rules (decorative, clipped) */
     .rule {
+      color: var(--faint);
       overflow: hidden;
       white-space: nowrap;
       user-select: none;
       letter-spacing: 0.05em;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
     }
-    .rule.eq {
-      margin: 0.3rem 0 0.9rem;
-      background: linear-gradient(90deg, #e9edf2 0%, #7d828b 55%, rgba(125, 130, 139, 0) 100%);
-    }
-    .rule.dash {
-      margin: 0.85rem 0;
-      background: linear-gradient(90deg, #565b64 0%, #40454e 45%, rgba(64, 69, 78, 0) 100%);
-    }
+    .rule.eq { color: var(--blue); opacity: 0.55; margin: 0.3rem 0 0.9rem; }
+    .rule.dash { opacity: 0.7; margin: 0.85rem 0; }
 
     /* Section labels — a nod to the markdown look */
     section h2 {
@@ -124,11 +114,8 @@
       color: var(--faint);
     }
     ul.exp li:last-child { margin-bottom: 0; }
+    .co { font-weight: 700; }
     .when { color: var(--muted); }
-
-    /* Companies stand out in bright silver; the accent lands on Biene Club */
-    ul.exp .co { color: var(--fg-bright); font-weight: 700; letter-spacing: 0.02em; }
-    ul.exp .co.a-yellow { color: var(--accent); }
 
     /* Contact / links */
     ul.links {
@@ -153,12 +140,16 @@
       transition: border-color 0.15s ease;
     }
     a:hover, a:focus-visible { border-bottom-color: currentColor; }
-    a:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 1px; }
+    a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 1px; }
 
-    /* Emphasis (monochrome) — a hair brighter than body text */
-    .a-blue, .a-teal, .a-green, .a-orange, .a-purple, .a-red { color: var(--emph); }
-    /* Biene Club — the gold anchor that carries through the page */
-    .a-yellow { color: var(--accent); text-shadow: 0 0 16px rgba(230, 184, 114, 0.40); }
+    /* Accent helpers */
+    .a-blue   { color: var(--blue); }
+    .a-teal   { color: var(--teal); }
+    .a-green  { color: var(--green); }
+    .a-yellow { color: var(--yellow); }
+    .a-orange { color: var(--orange); }
+    .a-purple { color: var(--purple); }
+    .a-red    { color: var(--red); }
   </style>
 </head>
 <body>
