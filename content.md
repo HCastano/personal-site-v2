@@ -24,3 +24,11 @@ and business strategy.
 
 - mail: [hernando@hcastano.com](mailto:hernando@hcastano.com)
 - github: [github.com/HCastano](https://github.com/HCastano)
+
+```
+                .' '.            __
+       .        .   .           (__\_
+        .         .         . -{{_(|8)
+jgs       ' .  . ' ' .  . '     (__/
+```
+

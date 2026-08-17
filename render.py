@@ -15,6 +15,7 @@ The markdown conventions, all of which fall out of how the page is styled:
     - **Name** _(…)_ — … an experience entry; bold is the company (.co) and
                          emphasis is the date (.when, muted + italic)
     - label: [text](url) a contact entry; the label renders as .lbl
+    ```…``` at the end   ASCII art, rendered verbatim into a footer <pre>
 
     Links wrap emphasis, never the other way round: [**Name**](url), not
     **[Name](url)**. render.py warns if it finds markdown it did not render.
@@ -51,6 +52,12 @@ ACCENTS = {
 NO_WRAP = ("Biene Club", "Entropy Cryptography", "Rust → Wasm", "VP Eng")
 
 RULE_WIDTH = 127
+
+# A ``` fenced block at the end of content.md becomes the footer art. It is
+# pulled out before anything else runs, so its whitespace survives and its
+# punctuation is never mistaken for emphasis. Update the label with the art.
+FENCE_RE = re.compile(r"```[^\n]*\n(.*?)\n?```\s*$", re.S)
+ART_LABEL = "ASCII art of a bee"
 
 
 def sub_text(pattern, repl, s):
@@ -114,7 +121,8 @@ def warn_unrendered(body):
     """Markdown surviving into the output means a convention was missed — most
     likely **[Name](url)**, which has to be written [**Name**](url). Say so,
     rather than quietly shipping literal asterisks to the page."""
-    text = re.sub(r"<[^>]*>", "", "\n".join(body))
+    text = re.sub(r"<pre\b.*?</pre>", "", "\n".join(body), flags=re.S)  # art is literal
+    text = re.sub(r"<[^>]*>", "", text)
     text = re.sub(r"[═─]+", "", text)
     stray = sorted(set(re.findall(r"\*\*|__|\[[^\]]*\]\(", text)))
     if stray:
@@ -135,7 +143,14 @@ def render_section(label, blocks, heading=None):
 
 
 def main():
-    blocks = re.split(r"\n\s*\n", (HERE / "content.md").read_text(encoding="utf-8").strip())
+    md = (HERE / "content.md").read_text(encoding="utf-8").strip()
+
+    art = None
+    if m := FENCE_RE.search(md):
+        art = m[1].rstrip("\n")
+        md = md[: m.start()].rstrip()
+
+    blocks = re.split(r"\n\s*\n", md)
 
     title = blocks.pop(0).lstrip("#").strip()
     lead, _, tail = blocks.pop(0).partition("\n")
@@ -162,6 +177,14 @@ def main():
     for name, section_blocks in sections:
         body += ["", rule("dash", "─", 4), ""]
         body += render_section(name.capitalize(), section_blocks, heading=name)
+
+    if art:
+        body += [
+            "",
+            "    <footer>",
+            f'      <pre class="art" role="img" aria-label="{ART_LABEL}">{html.escape(art, quote=False)}</pre>',
+            "    </footer>",
+        ]
 
     warn_unrendered(body)
 

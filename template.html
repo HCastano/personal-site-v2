@@ -151,6 +151,15 @@
     .lbl::before { content: "["; }
     .lbl::after  { content: "]"; }
 
+    /* Footer art — inherits the page's monospace stack so the columns line up */
+    pre.art {
+      margin: 1.6rem 0 0;
+      font: inherit;
+      line-height: 1.15;
+      color: var(--faint);
+      overflow-x: auto;
+    }
+
     a {
       color: var(--link);
       text-decoration: underline dotted transparent;
